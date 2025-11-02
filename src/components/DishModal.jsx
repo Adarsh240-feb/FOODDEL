@@ -36,7 +36,7 @@ const DishModal = ({ open, onClose, dish }) => {
             {/* Right: details/macros */}
             <div className="md:w-1/2 p-6">
               <h3 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white">{name}</h3>
-              <p className="text-xl font-semibold text-orange-500 mb-4">Price: ₹{price}</p>
+              <p className="text-xl font-semibold text-orange-500 mb-4">Price: ₹{price}.00</p>
 
               <h4 className="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-300">Nutrition (may differ per portion)</h4>
               <div className="grid grid-cols-2 gap-3">

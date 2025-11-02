@@ -83,7 +83,8 @@ const Navbar = () => {
           <>
             {/* hide top login button when mobile menu is open (mobile menu contains its own login) */}
             {!mobileOpen && (
-              <button onClick={() => setAuthOpen(true)} className="bg-orange-500 hover:bg-orange-600 transition text-white py-2 px-4 rounded-full text-sm font-medium">
+              // hide this primary auth CTA on small and medium screens so only the hamburger menu is visible there
+              <button onClick={() => setAuthOpen(true)} className="hidden lg:inline-flex bg-orange-500 hover:bg-orange-600 transition text-white py-2 px-4 rounded-full text-sm font-medium">
                 Login / Sign Up
               </button>
             )}
