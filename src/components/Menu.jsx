@@ -1,64 +1,26 @@
 import React from "react";
 import MenuCard from "../layouts/MenuCard";
 
+// Import images so Vite bundles them and paths are correct on deployment
+import menu1 from "../assets/img/menu1.png";
+import menu2 from "../assets/img/menu2.png";
+import menu3 from "../assets/img/menu3.png";
+import menu4 from "../assets/img/menu4.png";
+import menu5 from "../assets/img/menu5.png";
+import menu6 from "../assets/img/menu6.png";
+import menu7 from "../assets/img/menu7.png";
+import menu8 from "../assets/img/menu8.png";
+
 const dishes = [
-  {
-    id: 1,
-    name: "Chicken Burger",
-    price: "599",
-    tag: "Hot",
-    image: "src/assets/img/menu1.png",
-  },
-  {
-    id: 2,
-    name: "Peri Peri Pizza",
-    price: "849",
-    tag: "New",
-    image: "src/assets/img/menu2.png",
-  },
-  {
-    id: 3,
-    name: "Sushi Deluxe",
-    price: "625",
-    tag: "",
-    image: "src/assets/img/menu3.png",
-  },
-  {
-    id: 4,
-    name: "Paneer Poppers",
-    price: "780",
-    tag: "Hot",
-    image: "src/assets/img/menu4.png",
-  },
-  {
-    id: 5,
-    name: "Club Sandwich",
-    price: "320",
-    tag: "",
-    image: "src/assets/img/menu5.png",
-  },
-  {
-    id: 6,
-    name: "Mocktail Mojito",
-    price: "475",
-    tag: "New",
-    image: "src/assets/img/menu6.png",
-  },
-  {
-    id: 7,
-    name: "Nacho Fiesta",
-    price: "780",
-    tag: "Hot",
-    image: "src/assets/img/menu7.png",
-  },
-  {
-    id: 8,
-    name: "Biryani Bowl",
-    price: "320",
-    tag: "",
-    image: "src/assets/img/menu8.png",
-  },
-];  
+  { id: 1, name: "Chicken Burger", price: "599", tag: "Hot", image: menu1 },
+  { id: 2, name: "Peri Peri Pizza", price: "849", tag: "New", image: menu2 },
+  { id: 3, name: "Sushi Deluxe", price: "625", tag: "", image: menu3 },
+  { id: 4, name: "Paneer Poppers", price: "780", tag: "Hot", image: menu4 },
+  { id: 5, name: "Club Sandwich", price: "320", tag: "", image: menu5 },
+  { id: 6, name: "Mocktail Mojito", price: "475", tag: "New", image: menu6 },
+  { id: 7, name: "Nacho Fiesta", price: "780", tag: "Hot", image: menu7 },
+  { id: 8, name: "Biryani Bowl", price: "320", tag: "", image: menu8 },
+];
 
 const Menu = () => {
   return (

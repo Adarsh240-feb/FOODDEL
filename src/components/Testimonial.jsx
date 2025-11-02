@@ -3,30 +3,15 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import img from "../assets/img/review.jpg";
+import review1 from "../assets/img/review1.jpg";
+import review2 from "../assets/img/review2.jpg";
+import review3 from "../assets/img/review3.jpg";
 import { FaStar, FaRegStar } from "react-icons/fa";
 
 const testimonials = [
-  {
-    id: 1,
-    name: "Guy Hawkins",
-    text: "Foody is the best. Besides the many and delicious meals, it always delivers super fast and always fresh. I love it!",
-    rating: 5,
-    avatar: "src/assets/img/review1.jpg",
-  },
-  {
-    id: 2,
-    name: "Jane Doe",
-    text: "The meals are absolutely delicious and always arrive hot and on time. Highly recommend Foody!",
-    rating: 4,
-    avatar: "src/assets/img/review2.jpg",
-  },
-  {
-    id: 3,
-    name: "Mark Smith",
-    text: "Great service, fantastic food. Love the design and ease of the app too!",
-    rating: 5,
-    avatar: "src/assets/img/review3.jpg",
-  },
+  { id: 1, name: "Guy Hawkins", text: "Foody is the best. Besides the many and delicious meals, it always delivers super fast and always fresh. I love it!", rating: 5, avatar: review1 },
+  { id: 2, name: "Jane Doe", text: "The meals are absolutely delicious and always arrive hot and on time. Highly recommend Foody!", rating: 4, avatar: review2 },
+  { id: 3, name: "Mark Smith", text: "Great service, fantastic food. Love the design and ease of the app too!", rating: 5, avatar: review3 },
 ];
 
 const Testimonial = () => {
