@@ -3,15 +3,16 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
-// Firebase configuration - replace with your own values or load from env
+// Firebase configuration - prefer loading from Vite environment variables in production
+// Use VITE_FIREBASE_... variables in Vercel. Fallback to the existing values for local dev.
 const firebaseConfig = {
-  apiKey: "AIzaSyAnaIlTO5WYJfgtmx0Kfb44wdtsDEVxTyM",
-  authDomain: "fooddelogindata.firebaseapp.com",
-  projectId: "fooddelogindata",
-  storageBucket: "fooddelogindata.appspot.com",
-  messagingSenderId: "941064772665",
-  appId: "1:941064772665:web:e6a63b3082878fabbbc1e8",
-  measurementId: "G-172CXVP1L1",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyAnaIlTO5WYJfgtmx0Kfb44wdtsDEVxTyM",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "fooddelogindata.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "fooddelogindata",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "fooddelogindata.appspot.com",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "941064772665",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:941064772665:web:e6a63b3082878fabbbc1e8",
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-172CXVP1L1",
 };
 
 const app = initializeApp(firebaseConfig);
