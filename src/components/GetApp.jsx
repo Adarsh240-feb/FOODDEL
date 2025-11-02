@@ -20,7 +20,7 @@ const GetApp = () => {
             </p>
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
               <a
-                href="https://play.google.com/"
+                href="https://play.google.com/store/apps"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Get the app on Google Play"
@@ -31,7 +31,7 @@ const GetApp = () => {
                   <path d="M325.3 234.3L104.6 27.6C95.1 19.8 82.5 19.6 73 27.6 31.3 58.8 8 111.6 8 167.4v177.2C8 383 31.3 435.8 73 467 82.6 475 95.2 474.8 104.6 467l220.7-206.7-103.1-26z" fill="#3DDC84"/>
                   <path d="M433.6 239.4L362.7 199.1 222 325.3 325.3 377.1C336.8 382.3 349.9 382.5 361.9 378.1 403.6 346.9 426.9 294.1 426.9 238.3 426.9 234.9 426.7 231.5 426.3 228.1 419.3 231.8 433.6 239.4 433.6 239.4z" fill="#FFD400"/>
                 </svg>
-                Get it on Google Play
+                Get it on Play Store 
               </a>
 
               <a
