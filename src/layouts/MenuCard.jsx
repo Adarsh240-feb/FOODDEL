@@ -21,9 +21,14 @@ const MenuCard = ({ id, name, price, tag, image, onOpen }) => {
   };
 
   return (
-    <div id={elementId} className="group bg-gray-100 dark:bg-[#1F1D2B] p-6 rounded-2xl hover:bg-sky-900 dark:hover:bg-orange-500 transition-all duration-300">
-      <div className="relative mb-4 cursor-pointer" onClick={() => onOpen && onOpen()}>
-        <img src={image} alt={name} className="mx-auto" />
+    // make the whole card tappable on mobile/tablet; clicking the Add button stops propagation
+    <div
+      id={elementId}
+      onClick={() => onOpen && onOpen()}
+      className="group bg-gray-100 dark:bg-[#1F1D2B] p-6 rounded-2xl hover:bg-sky-900 dark:hover:bg-orange-500 transition-all duration-300 cursor-pointer"
+    >
+      <div className="relative mb-4">
+        <img src={image} alt={name} className="mx-auto max-h-40 md:max-h-56 object-contain" />
         {tag && (
           <span className="absolute -top-3.5 -left-4 bg-orange-500 text-white group-hover:bg-black text-xs px-2 py-1 rounded-md">
             {tag}
@@ -37,7 +42,7 @@ const MenuCard = ({ id, name, price, tag, image, onOpen }) => {
         {formatCurrency(parsePrice(price))}
       </p>
       <div className="mt-4">
-        <button onClick={handleAdd} className="w-full bg-orange-500 text-white py-2 rounded">Add to cart</button>
+        <button onClick={(e) => { e.stopPropagation(); handleAdd(); }} className="w-full bg-orange-500 text-white py-2 rounded">Add to cart</button>
       </div>
     </div>
   );
