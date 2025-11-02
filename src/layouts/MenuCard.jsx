@@ -2,7 +2,7 @@ import React from "react";
 import { useCart } from "../context/CartContext";
 import { formatCurrency, parsePrice } from "../utils/format";
 
-const MenuCard = ({ id, name, price, tag, image }) => {
+const MenuCard = ({ id, name, price, tag, image, onOpen }) => {
   const { addItem } = useCart();
 
   // create a stable, DOM-safe id for the menu card using the name
@@ -22,7 +22,7 @@ const MenuCard = ({ id, name, price, tag, image }) => {
 
   return (
     <div id={elementId} className="group bg-gray-100 dark:bg-[#1F1D2B] p-6 rounded-2xl hover:bg-sky-900 dark:hover:bg-orange-500 transition-all duration-300">
-      <div className="relative mb-4">
+      <div className="relative mb-4 cursor-pointer" onClick={() => onOpen && onOpen()}>
         <img src={image} alt={name} className="mx-auto" />
         {tag && (
           <span className="absolute -top-3.5 -left-4 bg-orange-500 text-white group-hover:bg-black text-xs px-2 py-1 rounded-md">

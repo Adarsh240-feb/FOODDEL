@@ -20,7 +20,7 @@ const Footer = () => {
           <div className="flex gap-4 mt-4 text-orange-500">
             {/* Replace the href values with your actual social URLs */}
             <a
-              href="https://facebook.com/yourpage"
+              href="https://facebook.com/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Facebook"
@@ -30,7 +30,7 @@ const Footer = () => {
             </a>
 
             <a
-              href="https://instagram.com/yourprofile"
+              href="https://www.instagram.com/just_adarshhh/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Instagram"
@@ -40,7 +40,7 @@ const Footer = () => {
             </a>
 
             <a
-              href="https://twitter.com/yourhandle"
+              href="https://twitter.com/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Twitter"
@@ -50,7 +50,7 @@ const Footer = () => {
             </a>
 
             <a
-              href="https://linkedin.com/in/yourprofile"
+              href="https://www.linkedin.com/in/adarsh-kesharwani-bba666315/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"

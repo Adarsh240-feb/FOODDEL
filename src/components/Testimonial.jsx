@@ -10,8 +10,8 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 
 const testimonials = [
   { id: 1, name: "Bhupendra Jogi", text: "Foody is the best. Besides the many and delicious meals, it always delivers super fast and always fresh. I love it!", rating: 5, avatar: review1 },
-  { id: 2, name: "Narendra Modi", text: "The meals are absolutely delicious and always arrive hot and on time. Highly recommend Foody!", rating: 4, avatar: review2 },
-  { id: 3, name: "Ramta Jogi", text: "Great service, fantastic food. Love the design and ease of the app too!", rating: 5, avatar: review3 },
+  { id: 2, name: "Narendra Modi", text: "The meals are absolutely delicious and always arrive hot and on time. Highly recommend Foody!", rating: 4, avatar: review1 },
+  { id: 3, name: "Ramta Jogi", text: "Great service, fantastic food. Love the design and ease of the app too!", rating: 5, avatar: review1 },
 ];
 
 const Testimonial = () => {
