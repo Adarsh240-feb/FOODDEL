@@ -9,82 +9,63 @@ import {
 const Footer = () => {
   return (
     <footer className="bg-orange-100 dark:bg-[#1F1D2B] text-black dark:text-white pt-16 pb-10 px-6 lg:px-20 transition-colors duration-300">
-      <div className="grid md:grid-cols-4 gap-10">
-        {/* Logo & Description */}
-        <div>
-          <h2 className="text-2xl font-bold text-orange-500 mb-4">BiteHub</h2>
+      <div className="flex flex-col md:flex-row justify-between items-start gap-10">
+        {/* Logo & Description (left) */}
+        <div className="md:w-1/2">
+          <h2 className="text-2xl font-bold text-orange-500 mb-4">FlavourFlow</h2>
           <p className="text-gray-700 dark:text-gray-300">
             Your FlavourFlow app for delicious and fast food delivery. Taste the joy
             at your doorstep.
           </p>
           <div className="flex gap-4 mt-4 text-orange-500">
-            <FaFacebookF className="hover:text-orange-600 cursor-pointer" />
-            <FaInstagram className="hover:text-orange-600 cursor-pointer" />
-            <FaTwitter className="hover:text-orange-600 cursor-pointer" />
-            <FaLinkedinIn className="hover:text-orange-600 cursor-pointer" />
+            {/* Replace the href values with your actual social URLs */}
+            <a
+              href="https://facebook.com/yourpage"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="hover:text-orange-600"
+            >
+              <FaFacebookF className="cursor-pointer" />
+            </a>
+
+            <a
+              href="https://instagram.com/yourprofile"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="hover:text-orange-600"
+            >
+              <FaInstagram className="cursor-pointer" />
+            </a>
+
+            <a
+              href="https://twitter.com/yourhandle"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              className="hover:text-orange-600"
+            >
+              <FaTwitter className="cursor-pointer" />
+            </a>
+
+            <a
+              href="https://linkedin.com/in/yourprofile"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="hover:text-orange-600"
+            >
+              <FaLinkedinIn className="cursor-pointer" />
+            </a>
           </div>
         </div>
-
-        {/* Company Links */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4">Company</h3>
-          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-            <li>
-              <a href="/" className="hover:text-orange-400 transition">
-                About Us
-              </a>
-            </li>
-            <li>
-              <a href="/" className="hover:text-orange-400 transition">
-                Careers
-              </a>
-            </li>
-            <li>
-              <a href="/" className="hover:text-orange-400 transition">
-                Blog
-              </a>
-            </li>
-            <li>
-              <a href="/" className="hover:text-orange-400 transition">
-                Press
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Support Links */}
-        <div>
-          <h3 className="text-lg font-semibold mb-4">Support</h3>
-          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-            <li>
-              <a href="/" className="hover:text-orange-400 transition">
-                Help Center
-              </a>
-            </li>
-            <li>
-              <a href="/" className="hover:text-orange-400 transition">
-                Safety Center
-              </a>
-            </li>
-            <li>
-              <a href="/" className="hover:text-orange-400 transition">
-                FAQs
-              </a>
-            </li>
-            <li>
-              <a href="/" className="hover:text-orange-400 transition">
-                Contact Support
-              </a>
-            </li>
-          </ul>
-        </div>
-
-        {/* Contact Info */}
-        <div>
+  {/* Contact Info (right) */}
+  <div className="md:w-1/2 md:text-right">
           <h3 className="text-lg font-semibold mb-4">Contact</h3>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             <li className="hover:text-orange-400 transition">
-              Email: kesharwaniadarsh2@gmail.com
+              Email: kesharwaniadarsh24@gmail.com
             </li>
             <li className="hover:text-orange-400 transition">
               Phone: +91 9305855671
@@ -98,7 +79,7 @@ const Footer = () => {
 
       {/* Bottom line */}
       <div className="text-center text-sm text-gray-500 border-t mt-4 pt-4">
-        @copyright  | All rights reserved
+        @copyright 2025 | All rights reserved
       </div>
     </footer>
   );
