@@ -3,6 +3,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
+// Firebase configuration - prefer loading from Vite environment variables in production
+// Use VITE_FIREBASE_... variables in Vercel. Fallback to the existing values for local dev.
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyAnaIlTO5WYJfgtmx0Kfb44wdtsDEVxTyM",
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "fooddelogindata.firebaseapp.com",
@@ -25,6 +27,5 @@ try {
 // Auth exports used by the app
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
-const db = getFirestore(app);
 
-export { auth, googleProvider, db };
+export { auth, googleProvider };
