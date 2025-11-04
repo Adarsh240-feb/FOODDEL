@@ -1,0 +1,11 @@
+{
+  "name": "fooddel-root",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "install": "cd Customer && npm ci",
+    "build": "cd Customer && npm run build",
+    "dev": "cd Customer && npm run dev",
+    "preview": "cd Customer && npm run preview"
+  }
+}
