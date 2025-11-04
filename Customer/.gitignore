@@ -23,3 +23,13 @@ dist-ssr
 *.sln
 *.sw?
 
+# Environment and secret files
+.env
+.env.*
+*firebase.js
+*.serviceAccount.json
+serviceAccountKey.json
+*.credentials.json
+*.key
+*.pem
+*.json
