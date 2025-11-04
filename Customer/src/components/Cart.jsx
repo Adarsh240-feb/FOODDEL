@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useCart } from "../context/CartContext";
 import { formatCurrency } from "../utils/format";
+import { useAuth } from "../context/AuthContext";
+import { db } from "../firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import dishes from "../data/menuData";
 
 const Cart = () => {
   const {
@@ -17,6 +21,7 @@ const Cart = () => {
 
   const [checkout, setCheckout] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", address: "", city: "Prayagraj", zip: "" });
+  const { user } = useAuth();
 
   if (!isOpen) return null;
 
@@ -24,12 +29,60 @@ const Cart = () => {
 
   const handlePlaceOrder = (e) => {
     e.preventDefault();
-    // Here you'd normally send data to server. For now just clear cart and show a simple message.
-    console.log("Order placed", { form, items, subtotal, gst, total });
-    clearCart();
-    setCheckout(false);
-    alert("Order placed successfully!\nThank you for your purchase.");
-    toggleCart();
+    // Build order object
+    // Build order items by resolving canonical menu data when possible
+    const resolvedItems = items.map((it) => {
+      const menuItem = dishes.find((d) => d.id === it.id || String(d.id) === String(it.id));
+      if (menuItem) {
+        return {
+          id: menuItem.id,
+          name: menuItem.name,
+          price: menuItem.price,
+          quantity: it.quantity,
+          macros: menuItem.macros || null,
+        };
+      }
+      // Fallback: use whatever is in cart
+      return { id: it.id, name: it.name || "Unknown Item", price: Number(it.price) || 0, quantity: it.quantity };
+    });
+
+    const order = {
+      uid: user ? user.uid : null,
+      email: user ? user.email : null,
+      customer: form,
+      items: resolvedItems,
+      subtotal,
+      gst,
+      total,
+      createdAt: serverTimestamp(),
+    };
+
+    // Try to persist order to Firestore when user is signed in
+    if (user) {
+      addDoc(collection(db, "orders"), order)
+        .then(() => {
+          clearCart();
+          setCheckout(false);
+          alert("Order placed successfully! Your order is saved to your account.");
+          toggleCart();
+        })
+        .catch((err) => {
+          console.error("Failed to save order:", err);
+          // fallback: still clear cart but notify user with the error message to aid debugging
+          clearCart();
+          setCheckout(false);
+          const msg = err?.message || String(err);
+          alert(`Order placed but failed to save to your account. Error: ${msg}`);
+          toggleCart();
+        });
+    } else {
+      // If not signed in, keep previous behavior (static/local order)
+      console.log("Order placed (anonymous)", order);
+      clearCart();
+      setCheckout(false);
+      alert("Order placed successfully!\nConsider signing in to save your order history.");
+      toggleCart();
+    }
   };
 
   return (

@@ -5,12 +5,14 @@ import ThemeToggle from "./ThemeToggle";
 import AuthModal from "./AuthModal";
 import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
+import OrderHistory from "./OrderHistory";
 
 const Navbar = () => {
   const { items, toggleCart } = useCart();
   const { user, username, signOut } = useAuth();
   const [authOpen, setAuthOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [ordersOpen, setOrdersOpen] = useState(false);
   const count = items.reduce((s, it) => s + it.quantity, 0);
 
   const handleScroll = (e, id) => {
@@ -76,7 +78,8 @@ const Navbar = () => {
         </button>
         {user ? (
           <div className="flex items-center gap-2">
-            <button className="text-sm px-3 py-1">{username ? `Hi, ${username}` : user.email}</button>
+            <button onClick={() => setOrdersOpen(true)} className="text-sm px-3 py-1">{username ? `Hi, ${username}` : user.email}</button>
+            <button onClick={() => setOrdersOpen(true)} className="bg-orange-100 text-orange-600 hover:bg-orange-200 py-1 px-3 rounded">My Orders</button>
             <button onClick={() => signOut()} className="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded">Logout</button>
           </div>
         ) : (
@@ -92,6 +95,8 @@ const Navbar = () => {
           </>
         )}
       </div>
+
+      <OrderHistory open={ordersOpen} onClose={() => setOrdersOpen(false)} />
 
       {/* Mobile menu panel */}
       {mobileOpen && (
