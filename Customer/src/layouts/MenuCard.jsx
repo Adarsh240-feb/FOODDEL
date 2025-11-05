@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { formatCurrency, parsePrice } from "../utils/format";
 
 const MenuCard = ({ id, name, price, tag, image, onOpen }) => {
   const { addItem } = useCart();
+  const [added, setAdded] = useState(false);
+  const timerRef = useRef(null);
 
   // create a stable, DOM-safe id for the menu card using the name
   const slugify = (text = "") =>
@@ -18,7 +20,17 @@ const MenuCard = ({ id, name, price, tag, image, onOpen }) => {
   const handleAdd = () => {
     const numericPrice = parsePrice(price);
     addItem({ id, name, price: numericPrice });
+    // trigger temporary visual feedback on the button
+    setAdded(true);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setAdded(false), 900);
   };
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   return (
     // make the whole card tappable on mobile/tablet; clicking the Add button stops propagation
@@ -42,7 +54,13 @@ const MenuCard = ({ id, name, price, tag, image, onOpen }) => {
         {formatCurrency(parsePrice(price))}
       </p>
       <div className="mt-4">
-        <button onClick={(e) => { e.stopPropagation(); handleAdd(); }} className="w-full bg-orange-500 text-white py-2 rounded">Add to cart</button>
+        <button
+          onClick={(e) => { e.stopPropagation(); handleAdd(); }}
+          className={"w-full text-white py-2 rounded transition-all duration-200 " + (added ? "dance shadow-lg bg-green-500" : "bg-orange-500")}
+          aria-pressed={added}
+        >
+          {added ? "Added \u2713" : "Add to cart"}
+        </button>
       </div>
     </div>
   );

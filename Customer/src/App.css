@@ -1,4 +1,4 @@
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
@@ -39,4 +39,31 @@
 
 .read-the-docs {
   color: #888;
+} */
+
+/* small dancing animation for Add to cart feedback */
+@keyframes dance {
+  0% {
+    transform: translateY(0) rotate(0) scale(1);
+  }
+  20% {
+    transform: translateY(-6px) rotate(-8deg) scale(1.05);
+  }
+  40% {
+    transform: translateY(0) rotate(8deg) scale(1.08);
+  }
+  60% {
+    transform: translateY(-4px) rotate(-6deg) scale(1.04);
+  }
+  80% {
+    transform: translateY(0) rotate(3deg) scale(1.02);
+  }
+  100% {
+    transform: translateY(0) rotate(0) scale(1);
+  }
+}
+
+.dance {
+  animation: dance 900ms ease;
+  will-change: transform;
 }
