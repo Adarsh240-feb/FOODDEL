@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
   signInWithPopup,
+  signInWithRedirect,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut as fbSignOut,
@@ -32,9 +33,35 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signInWithGoogle = async () => {
-    const res = await signInWithPopup(auth, googleProvider);
-    // after sign in, username will be loaded from storage in onAuthStateChanged
-    return res;
+    // Proactively use redirect when popup-based flows are likely to fail:
+    // - inside iframes (window.self !== window.top)
+    // - on mobile browsers (popup blockers / UX)
+    const isInIframe = typeof window !== "undefined" && window.self !== window.top;
+    const isMobile = typeof navigator !== "undefined" && /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (isInIframe || isMobile) {
+      // Redirect flow is more reliable in these environments
+      try {
+        await signInWithRedirect(auth, googleProvider);
+        return null;
+      } catch (err) {
+        console.error("signInWithRedirect failed:", err);
+        throw err;
+      }
+    }
+
+    // Otherwise try popup first and fall back to redirect on failure
+    try {
+      const res = await signInWithPopup(auth, googleProvider);
+      return res;
+    } catch (err) {
+      console.warn("Google popup sign-in failed, falling back to redirect:", err);
+      try {
+        await signInWithRedirect(auth, googleProvider);
+        return null;
+      } catch (err2) {
+        throw err2;
+      }
+    }
   };
 
   const signUpWithEmail = async (email, password, displayName) => {
