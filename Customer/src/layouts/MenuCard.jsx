@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 import { useCart } from "../context/CartContext";
 import { formatCurrency, parsePrice } from "../utils/format";
 
 const MenuCard = ({ id, name, price, tag, image, onOpen }) => {
   const { addItem } = useCart();
+  const { user } = useAuth();
   const [added, setAdded] = useState(false);
   const timerRef = useRef(null);
 
@@ -18,6 +20,15 @@ const MenuCard = ({ id, name, price, tag, image, onOpen }) => {
   const elementId = `menu-${slugify(name)}`;
 
   const handleAdd = () => {
+    // require login before adding to cart
+    if (!user) {
+      // ask the navbar to open the Auth modal
+      if (typeof window !== "undefined" && window.dispatchEvent) {
+        window.dispatchEvent(new CustomEvent("openAuthModal"));
+      }
+      return;
+    }
+
     const numericPrice = parsePrice(price);
     addItem({ id, name, price: numericPrice });
     // trigger temporary visual feedback on the button

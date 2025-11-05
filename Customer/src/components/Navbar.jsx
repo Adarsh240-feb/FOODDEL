@@ -15,6 +15,12 @@ const Navbar = () => {
   const [ordersOpen, setOrdersOpen] = useState(false);
   const count = items.reduce((s, it) => s + it.quantity, 0);
 
+  React.useEffect(() => {
+    const handler = () => setAuthOpen(true);
+    window.addEventListener("openAuthModal", handler);
+    return () => window.removeEventListener("openAuthModal", handler);
+  }, []);
+
   const handleScroll = (e, id) => {
     e.preventDefault();
     const el = document.getElementById(id);
@@ -97,6 +103,9 @@ const Navbar = () => {
       </div>
 
       <OrderHistory open={ordersOpen} onClose={() => setOrdersOpen(false)} />
+
+  {/* listen for global requests to open auth modal (e.g., from other components) */}
+  {/* attach listener imperatively so it's available whenever the NAV mounts */}
 
       {/* Mobile menu panel */}
       {mobileOpen && (
