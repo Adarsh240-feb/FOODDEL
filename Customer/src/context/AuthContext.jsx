@@ -55,13 +55,14 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signInWithGoogle = async () => {
-    // Proactively use redirect when popup-based flows are likely to fail:
-    // - inside iframes (window.self !== window.top)
-    // - on mobile browsers (popup blockers / UX)
+    // Decide strategy: desktop -> popup, mobile/tablet or in-iframe -> redirect
     const isInIframe = typeof window !== "undefined" && window.self !== window.top;
-    const isMobile = typeof navigator !== "undefined" && /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-    if (isInIframe || isMobile) {
-      // Redirect flow is more reliable in these environments
+    const isMobileOrTablet =
+      typeof navigator !== "undefined" && /Mobi|Android|iPhone|iPad|iPod|Tablet/i.test(navigator.userAgent)
+      || (typeof window !== "undefined" && 'ontouchstart' in window && Math.min(window.screen.width || 0, window.screen.height || 0) < 1000);
+
+    if (isInIframe || isMobileOrTablet) {
+      // Mobile/tablet or embedded contexts: always use redirect (more reliable)
       try {
         await signInWithRedirect(auth, googleProvider);
         return null;
@@ -71,7 +72,7 @@ export const AuthProvider = ({ children }) => {
       }
     }
 
-    // Otherwise try popup first and fall back to redirect on failure
+    // Desktop: prefer popup UX; if popup fails (popup blocked), fall back to redirect
     try {
       const res = await signInWithPopup(auth, googleProvider);
       return res;
