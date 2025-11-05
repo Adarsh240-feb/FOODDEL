@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import Logo from "./Logo";
 
 const AuthModal = ({ open, onClose }) => {
-  const { user, username, loading, redirectError, setRedirectError, signInWithGoogle, signUpWithEmail, signInWithEmail, signOut, setUsername } = useAuth();
+  const { user, username, loading, redirectError, setRedirectError, redirectResultSummary, setRedirectResultSummary, signInWithGoogle, signUpWithEmail, signInWithEmail, signOut, setUsername } = useAuth();
   const [mode, setMode] = useState("login"); // login or signup
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -117,6 +117,28 @@ const AuthModal = ({ open, onClose }) => {
                   className="text-sm text-red-600 underline"
                 >
                   Dismiss
+                </button>
+              </div>
+            </div>
+          )}
+          {redirectResultSummary && (
+            <div className="mb-4 p-3 bg-blue-50 border border-blue-200 text-blue-800 rounded text-sm">
+              <div className="font-medium">Redirect result (debug)</div>
+              <div className="mt-1 text-xs">
+                <div>hasUser: {String(redirectResultSummary.hasUser)}</div>
+                <div>uid: {redirectResultSummary.uid || "-"}</div>
+                <div>email: {redirectResultSummary.email || "-"}</div>
+                <div>displayName: {redirectResultSummary.displayName || "-"}</div>
+                <div>providerId: {redirectResultSummary.providerId || "-"}</div>
+                <div>credentialProviderId: {redirectResultSummary.credentialProviderId || "-"}</div>
+                <div>time: {redirectResultSummary.timestamp}</div>
+              </div>
+              <div className="mt-2 text-right">
+                <button
+                  onClick={() => { try { setRedirectResultSummary(null); localStorage.removeItem('ff_last_redirect_summary'); } catch(e){} }}
+                  className="text-sm text-blue-600 underline"
+                >
+                  Clear
                 </button>
               </div>
             </div>
