@@ -7,6 +7,7 @@ import {
   signOut as fbSignOut,
   onAuthStateChanged,
   updateProfile,
+  getRedirectResult,
 } from "firebase/auth";
 import { auth, googleProvider } from "../firebase";
 
@@ -18,6 +19,19 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // If the app returned from a signInWithRedirect flow, getRedirectResult will
+    // resolve with the result or an error. We call it here to surface redirect
+    // errors in environments (mobile browsers / in-app browsers) where popups
+    // are unreliable.
+    try {
+      getRedirectResult(auth).catch((err) => {
+        // sensible to log; the UI can show errors via modal if needed
+        console.warn("getRedirectResult error:", err);
+      });
+    } catch (e) {
+      // ignore
+    }
+
     const unsub = onAuthStateChanged(auth, (u) => {
       setUser(u);
       if (u) {
