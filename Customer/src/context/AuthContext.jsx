@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [username, setUsernameState] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [redirectError, setRedirectError] = useState(null);
 
   useEffect(() => {
     // If the app returned from a signInWithRedirect flow, getRedirectResult will
@@ -24,10 +25,17 @@ export const AuthProvider = ({ children }) => {
     // errors in environments (mobile browsers / in-app browsers) where popups
     // are unreliable.
     try {
-      getRedirectResult(auth).catch((err) => {
-        // sensible to log; the UI can show errors via modal if needed
-        console.warn("getRedirectResult error:", err);
-      });
+      getRedirectResult(auth)
+        .then(() => {
+          // no-op when redirect result resolves successfully
+        })
+        .catch((err) => {
+          // log and surface a user-friendly message for mobile redirect failures
+          console.warn("getRedirectResult error:", err);
+          try {
+            setRedirectError(err?.message ? String(err.message) : String(err));
+          } catch (e) {}
+        });
     } catch (e) {
       // ignore
     }
@@ -113,7 +121,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, username, loading, signInWithGoogle, signUpWithEmail, signInWithEmail, signOut, setUsername }}>
+    <AuthContext.Provider value={{ user, username, loading, redirectError, setRedirectError, signInWithGoogle, signUpWithEmail, signInWithEmail, signOut, setUsername }}>
       {children}
     </AuthContext.Provider>
   );

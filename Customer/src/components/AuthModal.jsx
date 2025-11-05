@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import Logo from "./Logo";
 
 const AuthModal = ({ open, onClose }) => {
-  const { user, username, loading, signInWithGoogle, signUpWithEmail, signInWithEmail, signOut, setUsername } = useAuth();
+  const { user, username, loading, redirectError, setRedirectError, signInWithGoogle, signUpWithEmail, signInWithEmail, signOut, setUsername } = useAuth();
   const [mode, setMode] = useState("login"); // login or signup
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -107,6 +107,20 @@ const AuthModal = ({ open, onClose }) => {
         </div>
 
         <div className="mt-6">
+          {redirectError && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded text-sm">
+              <div className="font-medium">Sign-in error</div>
+              <div className="mt-1">{redirectError}</div>
+              <div className="mt-2 text-right">
+                <button
+                  onClick={() => { try { setRedirectError(null); } catch(e){} }}
+                  className="text-sm text-red-600 underline"
+                >
+                  Dismiss
+                </button>
+              </div>
+            </div>
+          )}
           {user && !username ? (
             <div>
               <p className="mb-3 text-gray-300">Welcome! Choose a username to finish setup.</p>
