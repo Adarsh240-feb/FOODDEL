@@ -9,6 +9,7 @@ const AuthModal = ({ open, onClose }) => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [error, setError] = useState("");
+  const [storageAvailable, setStorageAvailable] = useState(true);
 
   useEffect(() => {
     if (!open) {
@@ -17,6 +18,15 @@ const AuthModal = ({ open, onClose }) => {
       setName("");
       setError("");
       setMode("login");
+    }
+    // check sessionStorage availability (used by Firebase redirect flow)
+    try {
+      const key = '__ff_storage_test';
+      sessionStorage.setItem(key, '1');
+      sessionStorage.removeItem(key);
+      setStorageAvailable(true);
+    } catch (e) {
+      setStorageAvailable(false);
     }
   }, [open]);
 
@@ -39,6 +49,15 @@ const AuthModal = ({ open, onClose }) => {
   };
 
   const handleGoogle = async () => {
+    // If sessionStorage is unavailable, redirect-based sign-in will fail.
+    if (!storageAvailable) {
+      setError(
+        "Your browser is blocking session storage which is required for Google sign-in.\n" +
+          "Please open this site in your phone's browser (use the button below) or use email sign-in."
+      );
+      return;
+    }
+
     try {
       await signInWithGoogle();
       onClose();
@@ -97,7 +116,7 @@ const AuthModal = ({ open, onClose }) => {
         </button>
 
         <div className="flex flex-col items-center gap-4">
-          <div className="p-1 rounded-full bg-gradient-to-br from-orange-400 to-orange-600">
+          <div className="p-1 rounded-full bg-linear-to-br from-orange-400 to-orange-600">
             <div className="bg-gray-900 p-3 rounded-full">
               <Logo />
             </div>
@@ -186,9 +205,9 @@ const AuthModal = ({ open, onClose }) => {
 
               <div className="mt-2">
                 {mode === "login" ? (
-                  <button onClick={handleLogin} className="w-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white py-3 rounded-lg font-medium">Log In</button>
+                  <button onClick={handleLogin} className="w-full bg-linear-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white py-3 rounded-lg font-medium">Log In</button>
                 ) : (
-                  <button onClick={handleSignup} className="w-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white py-3 rounded-lg font-medium">Sign Up</button>
+                  <button onClick={handleSignup} className="w-full bg-linear-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 text-white py-3 rounded-lg font-medium">Sign Up</button>
                 )}
               </div>
 
@@ -207,6 +226,34 @@ const AuthModal = ({ open, onClose }) => {
                 </svg>
                 <span>Log In with Google</span>
               </button>
+
+              {!storageAvailable && (
+                <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded text-sm">
+                  <div className="mb-2">It looks like your browser is blocking session storage which is required for Google sign-in.</div>
+                  <div className="flex gap-2 justify-end">
+                    <button
+                      onClick={() => {
+                        try {
+                          // open in system browser/tab
+                          window.open(window.location.href, "_blank");
+                        } catch (e) {}
+                      }}
+                      className="px-3 py-2 bg-orange-500 text-white rounded"
+                    >
+                      Open in browser
+                    </button>
+                    <button
+                      onClick={() => {
+                        // clear error and let user proceed with email signin
+                        setError("");
+                      }}
+                      className="px-3 py-2 bg-gray-700 text-white rounded"
+                    >
+                      Use email instead
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <div className="mt-5 text-center text-sm text-gray-400">
                 {mode === "login" ? (
