@@ -105,33 +105,32 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const signInWithGoogle = async () => {
-    // Decide strategy: desktop -> popup, mobile/tablet or in-iframe -> redirect
-    const isInIframe = typeof window !== "undefined" && window.self !== window.top;
-    const isMobileOrTablet =
-      typeof navigator !== "undefined" && /Mobi|Android|iPhone|iPad|iPod|Tablet/i.test(navigator.userAgent)
-      || (typeof window !== "undefined" && 'ontouchstart' in window && Math.min(window.screen.width || 0, window.screen.height || 0) < 1000);
-
-    if (isInIframe || isMobileOrTablet) {
-      // Mobile/tablet or embedded contexts: always use redirect (more reliable)
-      try {
-        await signInWithRedirect(auth, googleProvider);
-        return null;
-      } catch (err) {
-        console.error("signInWithRedirect failed:", err);
-        throw err;
-      }
-    }
-
-    // Desktop: prefer popup UX; if popup fails (popup blocked), fall back to redirect
+    // Try popup first everywhere (including mobile/tablet). If popup is
+    // blocked or fails (common in some in-app browsers), fall back to
+    // signInWithRedirect.
     try {
+      // Ensure persistence is set to local before starting sign-in (best-effort).
+      try {
+        await setPersistence(auth, browserLocalPersistence);
+      } catch (e) {
+        console.warn("setPersistence before sign-in failed:", e);
+      }
+
       const res = await signInWithPopup(auth, googleProvider);
       return res;
     } catch (err) {
-      console.warn("Google popup sign-in failed, falling back to redirect:", err);
+      // Common reasons: popup blocked, environment doesn't support popups
+      console.warn("Google popup sign-in failed (will try redirect):", err);
       try {
+        // Keep a brief debug note so UI can explain the fallback path
+        try {
+          setRedirectError?.(`Popup sign-in failed: ${err?.message || err}`);
+        } catch (e) {}
+
         await signInWithRedirect(auth, googleProvider);
         return null;
       } catch (err2) {
+        console.error("signInWithRedirect also failed:", err2);
         throw err2;
       }
     }
@@ -172,7 +171,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, username, loading, redirectError, setRedirectError, redirectResultSummary, setRedirectResultSummary, signInWithGoogle, signUpWithEmail, signInWithEmail, signOut, setUsername }}>
+    <AuthContext.Provider value={{ user, username, loading, redirectError, setRedirectError, signInWithGoogle, signUpWithEmail, signInWithEmail, signOut, setUsername }}>
       {children}
     </AuthContext.Provider>
   );
