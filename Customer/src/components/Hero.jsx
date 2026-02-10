@@ -150,6 +150,7 @@ const Hero = () => {
             src={img}
             alt="Delivery Guy"
             className="rounded-full w-[350px] h-[350px] md:w-[400px] md:h-[400px] object-cover"
+            loading="lazy"
           />
         </div>
 

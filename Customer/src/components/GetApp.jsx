@@ -58,6 +58,7 @@ const GetApp = () => {
             <img
               src={img}
               alt="App Preview"
+              loading="lazy"
               className="w-[280px] md:w-[320px] drop-shadow-2xl"
             />
           </div>

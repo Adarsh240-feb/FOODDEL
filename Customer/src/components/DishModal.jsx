@@ -30,7 +30,7 @@ const DishModal = ({ open, onClose, dish }) => {
           <div className="flex flex-col md:flex-row items-stretch">
             {/* Left: image */}
             <div className="md:w-1/2 p-6 flex items-center justify-center bg-gray-50 dark:bg-gray-800">
-              <img src={image} alt={name} className="w-full max-w-sm rounded-lg object-cover" />
+              <img src={image} alt={name} className="w-full max-w-sm rounded-lg object-cover" loading="lazy" />
             </div>
 
             {/* Right: details/macros */}

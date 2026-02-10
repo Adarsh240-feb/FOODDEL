@@ -4,8 +4,6 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import img from "../assets/img/review.jpg";
 import review1 from "../assets/img/review1.jpg";
-import review2 from "../assets/img/review2.jpg";
-import review3 from "../assets/img/review3.jpg";
 import { FaStar, FaRegStar } from "react-icons/fa";
 
 const testimonials = [
@@ -35,6 +33,7 @@ const Testimonial = () => {
             src={img}
             alt="Delivery Guy"
             className="w-3/4 sm:w-2/3 md:w-full max-w-sm rounded-2xl"
+            loading="lazy"
           />
         </div>
 
@@ -59,6 +58,7 @@ const Testimonial = () => {
                       src={review.avatar}
                       alt={review.name}
                       className="w-12 h-12 rounded-full object-cover"
+                      loading="lazy"
                     />
                     <div>
                       <h4 className="font-semibold">{review.name}</h4>
