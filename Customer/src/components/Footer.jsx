@@ -65,7 +65,7 @@ const Footer = () => {
           <h3 className="text-lg font-semibold mb-4">Contact</h3>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             <li className="hover:text-orange-400 transition">
-              Email: divyanshsrivastava890@gmail.com
+              Email: srivastavamaanav48@gmail.com
             </li>
             <li className="hover:text-orange-400 transition">
               Phone: +91 9621546496
