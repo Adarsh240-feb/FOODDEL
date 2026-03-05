@@ -65,10 +65,10 @@ const Footer = () => {
           <h3 className="text-lg font-semibold mb-4">Contact</h3>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             <li className="hover:text-orange-400 transition">
-              Email: kesharwaniadarsh24@gmail.com
+              Email: divyanshsrivastava890@gmail.com
             </li>
             <li className="hover:text-orange-400 transition">
-              Phone: +91 9305855671
+              Phone: +91 9621546496
             </li>
             <li className="hover:text-orange-400 transition">
               Location: Prayagraj, India
