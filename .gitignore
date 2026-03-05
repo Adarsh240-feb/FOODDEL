@@ -16,7 +16,7 @@ dist-ssr
 .env
 .env.*
 sendgrid.env
-server/.env
+Customer/.env
 
 # Editor directories and files
 .vscode/*
